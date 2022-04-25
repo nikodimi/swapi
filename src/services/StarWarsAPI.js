@@ -17,6 +17,15 @@ const getFilms = async () => {
     return res.data
 }
 
+/**
+ * Get all people
+ */
+
+const getPeople = async () => {
+    const res = await axios.get(`${BASE_URL}/people`)
+    return res.data
+}
 export default {
-    getFilms
+    getFilms,
+    getPeople
 }
