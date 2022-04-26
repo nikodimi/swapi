@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import MoviesPage from './pages/MoviesPage'
 import PeoplesPage from './pages/PeoplesPage'
+import PersonPage from './pages/PersonPage'
 import NotFoundPage from './pages/NotFoundPage';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/films" element={<MoviesPage />} />
                 <Route path="/people" element={<PeoplesPage />} />
+                <Route path="/people/:id" element={<PersonPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Container>
