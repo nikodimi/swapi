@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Row, Col, Card, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap'
+import { getIdFromUrl } from '../helpers'
 import StarWarsAPI from '../services/StarWarsAPI'
 import banner from '../assets/images/banner.png'
 
@@ -10,15 +12,11 @@ const MoviesPage = () => {
     const getFilms = async () => {
         const data = await StarWarsAPI.getFilms()
         setFilms(data)
-        console.log(data)
     }
-
 
     useEffect(() => {
         getFilms()
     }, [])
-
-    console.log(films)
 
     return (
         <>  
@@ -26,24 +24,30 @@ const MoviesPage = () => {
                 <h1>Movies</h1>
             
                 {films && (
-                    films.results.map((films) => 
+                    films.results.map((film) => 
 
-                    <Col md={4}>
-
-                        <Card>
-                            <Card.Img variant="top" src={banner} />
-                            <Card.Body>
-                                <Card.Title>{films.title}</Card.Title>
-                            </Card.Body>
-                            <ListGroup>
-                                <ListGroupItem>Episode {films.episode_id}</ListGroupItem>
-                                <ListGroupItem>Released {films.release_date}</ListGroupItem>
-                                <ListGroupItem>Characters {films.characters.length}</ListGroupItem>
-                            </ListGroup>
-                        </Card>
-
-                    </Col>
-
+                        <Col md={4} className="mb-3">
+                            <Card>
+                                <Card.Img variant="top" src={banner} />
+                                <Card.Body>
+                                    <Card.Title>{film.title}</Card.Title>
+                                </Card.Body>
+                                <ListGroup>
+                                    <ListGroup.Item>Episode {film.episode_id}</ListGroup.Item>
+                                    <ListGroup.Item>Released {film.release_date}</ListGroup.Item>
+                                    <ListGroup.Item>Characters {film.characters.length}</ListGroup.Item>
+                                </ListGroup>
+                                <Card.Body>
+                                    <Button
+                                        action
+                                        as={Link}
+                                        to={`/films/${getIdFromUrl(film.url)}`}
+                                        >
+                                        Read more
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
                 ))}
                 
             </Row>
