@@ -12,8 +12,8 @@ const BASE_URL = 'https://swapi.dev/api/'
  * Get all films
  */
 
-const getFilms = async () => {
-    const res = await axios.get(`${BASE_URL}/films`)
+const getFilms = async (page) => {
+    const res = await axios.get(`${BASE_URL}/films/?page=${page}`)
     return res.data
 }
 
@@ -30,8 +30,8 @@ const getFilms = async () => {
  * Get all people
  */
 
-const getPeople = async () => {
-    const res = await axios.get(`${BASE_URL}/people`)
+const getPeople = async (page) => {
+    const res = await axios.get(`${BASE_URL}/people/?page=${page}`)
     return res.data
 }
 

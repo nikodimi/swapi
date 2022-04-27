@@ -8,25 +8,25 @@ import banner from '../assets/images/banner.png'
 const MoviesPage = () => {
 
     const [films, setFilms] = useState()
+    const [page, setPage] = useState(1)
 
     const getFilms = async () => {
-        const data = await StarWarsAPI.getFilms()
+        const data = await StarWarsAPI.getFilms(page)
         setFilms(data)
     }
 
     useEffect(() => {
         getFilms()
-    }, [])
+    }, [page])
 
     return (
-        <>  
-            <Row>
-                <h1>Movies</h1>
-            
-                {films && (
-                    films.results.map((film) => 
-
-                        <Col md={4} className="mb-3">
+        <>        
+            <h1>Films</h1>
+        
+            {films && (
+                <Row>
+                    {films.results.map((film) => (
+                        <Col md={4} className="mb-3" key={film.episode_id}>
                             <Card>
                                 <Card.Img variant="top" src={banner} />
                                 <Card.Body>
@@ -39,7 +39,6 @@ const MoviesPage = () => {
                                 </ListGroup>
                                 <Card.Body>
                                     <Button
-                                        action
                                         as={Link}
                                         to={`/films/${getIdFromUrl(film.url)}`}
                                         >
@@ -48,9 +47,26 @@ const MoviesPage = () => {
                                 </Card.Body>
                             </Card>
                         </Col>
-                ))}
+                    ))}
+                    
+                    <div className="d-flex justify-content-between align-items-center mt-4">
+                        <Button
+                            disabled={page === 1}
+                            onClick={() => setPage(prevValue => prevValue - 1)}
+                            variant="primary"
+                        >Previous Page</Button>
+                        
+                        <div className="page">{page}</div>
+
+                        <Button
+                            onClick={() => setPage(prevValue => prevValue + 1)}
+                            disabled={!films.next}
+                            variant="primary"
+                        >Next Page</Button>
+                    </div>
+                </Row>        
+            )}           
                 
-            </Row>
         </>
     )
 }

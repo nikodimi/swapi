@@ -7,25 +7,25 @@ import StarWarsAPI from '../services/StarWarsAPI'
 const PeoplesPage = () => {
 
     const [people, setPeople] = useState()
+    const [page, setPage] = useState(1)
 
     const getPeople = async () => {
-        const data = await StarWarsAPI.getPeople()
+        const data = await StarWarsAPI.getPeople(page)
         setPeople(data)
     }
 
     useEffect(() => {
         getPeople()
-    }, [])
+    }, [page])
 
     return (
         <>  
-            <Row>
-                <h1>People</h1>
-            
-                {people && (
-                    people.results.map((person) => 
+            <h1>People</h1>
 
-                        <Col md={4} className="mb-3">
+            {people && (
+                <Row>
+                    {people.results.map((person, index) => (
+                        <Col md={4} className="mb-3" key={index}>
                             <Card>
                                 <Card.Body>
                                     <Card.Title>{person.name}</Card.Title>
@@ -33,11 +33,10 @@ const PeoplesPage = () => {
                                 <ListGroup>
                                     <ListGroup.Item>Gender {person.gender}</ListGroup.Item>
                                     <ListGroup.Item>Born {person.birth_year}</ListGroup.Item>
-                                    <ListGroup.Item>In {person.films.length} movies</ListGroup.Item>
+                                    <ListGroup.Item>In {person.films.length} films</ListGroup.Item>
                                 </ListGroup>
                                 <Card.Body>
                                     <Button
-                                        action
                                         as={Link}
                                         to={`/people/${getIdFromUrl(person.url)}`}
                                         >
@@ -46,11 +45,28 @@ const PeoplesPage = () => {
                                 </Card.Body>
                             </Card>
                         </Col>
-                ))}
+                    ))}
+
+                    <div className="d-flex justify-content-between align-items-center mt-4">     
+                        <Button
+                            disabled={page === 1}
+                            onClick={() => setPage(prevValue => prevValue - 1)}
+                            variant="primary"
+                        >Previous Page</Button>
+                   
+                    <div className="page">{page}</div>
+                   
+                        <Button
+                            onClick={() => setPage(prevValue => prevValue + 1)}
+                            disabled={!people.next}
+                            variant="primary"
+                        >Next Page</Button>
+                    </div>
+                </Row>
+            )}
                 
-            </Row>
         </>
-  )
+    )
 }
 
 export default PeoplesPage
