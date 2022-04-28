@@ -12,7 +12,6 @@ const MoviePage = () => {
     const getFilm = async (id) => {
         const data = await StarWarsAPI.getFilm(id)
         setFilm(data)
-        console.log(data)
     }
 
     useEffect(() => {
@@ -33,15 +32,13 @@ const MoviePage = () => {
                             <Card.Body>
                                 <Card.Text>Episode {film.episode_id}</Card.Text>
                                 <Card.Text>Director {film.director}</Card.Text>
-                                <Card.Text>Episode {film.producer}</Card.Text>
-                                <Card.Text>Episode {film.release_date}</Card.Text>
-                                <Card.Text>Episode {film.episode_id}</Card.Text>
+                                <Card.Text>Producer {film.producer}</Card.Text>
+                                <Card.Text>Released {film.release_date}</Card.Text>
                                 <Card.Subtitle>Links:</Card.Subtitle>
                             </Card.Body>
                             <ListGroup className="characterList">
                                 {film.characters.map((character, index) => 
                                     <ListGroup.Item
-                                        action
                                         as={Link}
                                         to={`/people/${getIdFromUrl(character)}`}
                                         key={index}

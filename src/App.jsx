@@ -1,14 +1,14 @@
 import Container from 'react-bootstrap/Container'
-import Navigation from './components/Navigation';
-import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import Navigation from './components/Navigation'
+import { Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
 import MoviesPage from './pages/MoviesPage'
 import MoviePage from './pages/MoviePage'
 import PeoplesPage from './pages/PeoplesPage'
 import PersonPage from './pages/PersonPage'
-import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './pages/NotFoundPage'
 import 'bootstrap/dist/css/bootstrap.css'
-import './App.css';
+import './App.css'
 
 function App() {
   return (
