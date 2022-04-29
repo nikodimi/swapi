@@ -2,28 +2,36 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap'
 import { getIdFromUrl } from '../helpers'
+import Loading from '../components/Loading'
 import StarWarsAPI from '../services/StarWarsAPI'
 
 const PeoplesPage = () => {
 
     const [people, setPeople] = useState()
     const [page, setPage] = useState(1)
-
-    const getPeople = async () => {
-        const data = await StarWarsAPI.getPeople(page)
-        setPeople(data)
-    }
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        getPeople()
+        const getPeople = async () => {
+            setLoading(true)
+            const data = await StarWarsAPI.getPeople(page)
+            setLoading(false)
+            setPeople(data)
+        }
+        getPeople()    
     }, [page])
 
     return (
         <>  
-            <h1>People</h1>
 
-            {people && (
+            {loading && (
+                <Loading />
+            )}
+
+            {people && !loading && (
                 <Row>
+                    <h1>People</h1>
+                    
                     {people.results.map((person, index) => (
                         <Col md={4} className="mb-3" key={index}>
                             <Card>

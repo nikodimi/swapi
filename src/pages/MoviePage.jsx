@@ -2,15 +2,19 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Row, Col, Card, ListGroup } from 'react-bootstrap'
 import { getIdFromUrl } from '../helpers'
+import Loading from '../components/Loading'
 import StarWarsAPI from '../services/StarWarsAPI'
 
 const MoviePage = () => {
 
     const [ film, setFilm ] = useState()
     const { id } = useParams()
+    const [loading, setLoading] = useState(false)
 
     const getFilm = async (id) => {
+        setLoading(true)
         const data = await StarWarsAPI.getFilm(id)
+        setLoading(false)
         setFilm(data)
     }
 
@@ -18,15 +22,16 @@ const MoviePage = () => {
         getFilm(id)
     }, [id])
     
-
     return (
         <>
-            <Row>
 
-                {film && (
+            {loading && !loading && (
+                <Loading />
+            )} 
 
+            {film && ( 
+                <Row>
                     <Col md={8} className='mx-auto'>
-
                         <Card>
                             <Card.Header>{film.title}</Card.Header>
                             <Card.Body>
@@ -48,12 +53,9 @@ const MoviePage = () => {
                                 )}
                             </ListGroup>
                         </Card>
-
                     </Col>
-                )}
-
-            </Row>
-
+                </Row>
+            )}
         </>
     )
     

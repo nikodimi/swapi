@@ -2,15 +2,19 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Row, Col, Card, ListGroup } from 'react-bootstrap'
 import { getIdFromUrl } from '../helpers'
+import Loading from '../components/Loading'
 import StarWarsAPI from '../services/StarWarsAPI'
 
 const PersonPage = () => {
 
     const [ person, setPerson ] = useState()
     const { id } = useParams()
+    const [loading, setLoading] = useState(false)
 
     const getPerson = async (id) => {
+        setLoading(true)
         const data = await StarWarsAPI.getPerson(id)
+        setLoading(false)
         setPerson(data)
     }
 
@@ -20,12 +24,14 @@ const PersonPage = () => {
 
     return (
         <>  
-            <Row>
-            
-                {person && (
-                   
-                    <Col md={8} className='mx-auto'>
 
+            {loading && (
+                <Loading />
+            )}
+
+            {person && !loading && (
+                <Row>
+                    <Col md={8} className='mx-auto'>
                         <Card>
                             <Card.Header>{person.name}</Card.Header>
                             <Card.Body>
@@ -49,12 +55,9 @@ const PersonPage = () => {
                                     )}
                             </ListGroup>
                         </Card>
-
                     </Col>
-
-                )}
-                
-            </Row>
+                </Row>
+            )}   
         </>
     )
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, Card, ListGroup, Button } from 'react-bootstrap'
 import { getIdFromUrl } from '../helpers'
+import Loading from '../components/Loading'
 import StarWarsAPI from '../services/StarWarsAPI'
 import banner from '../assets/images/banner.png'
 
@@ -9,22 +10,28 @@ const MoviesPage = () => {
 
     const [films, setFilms] = useState()
     const [page, setPage] = useState(1)
-
-    const getFilms = async () => {
-        const data = await StarWarsAPI.getFilms(page)
-        setFilms(data)
-    }
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        const getFilms =  async () => {
+            setLoading(true)
+            const data = await StarWarsAPI.getFilms(page)
+            setLoading(false)
+            setFilms(data)
+        }
         getFilms()
     }, [page])
 
     return (
-        <>        
-            <h1>Films</h1>
+        <>  
+            {loading && (
+                <Loading />
+            )}      
         
-            {films && (
+            {films && !loading && (
                 <Row>
+                    <h1>Films</h1>
+
                     {films.results.map((film) => (
                         <Col md={4} className="mb-3" key={film.episode_id}>
                             <Card>
