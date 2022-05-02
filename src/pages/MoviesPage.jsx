@@ -16,8 +16,8 @@ const MoviesPage = () => {
         const getFilms =  async () => {
             setLoading(true)
             const data = await StarWarsAPI.getFilms(page)
-            setLoading(false)
             setFilms(data)
+            setLoading(false)
         }
         getFilms()
     }, [page])

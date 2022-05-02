@@ -1,4 +1,3 @@
-// import { Modal } from "react-bootstrap"
 import loading from '../assets/images/loading.gif'
 
 const Loading = () => {

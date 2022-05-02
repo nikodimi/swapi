@@ -15,8 +15,8 @@ const PeoplesPage = () => {
         const getPeople = async () => {
             setLoading(true)
             const data = await StarWarsAPI.getPeople(page)
-            setLoading(false)
             setPeople(data)
+            setLoading(false)
         }
         getPeople()    
     }, [page])
@@ -35,9 +35,7 @@ const PeoplesPage = () => {
                     {people.results.map((person, index) => (
                         <Col md={4} className="mb-3" key={index}>
                             <Card>
-                                <Card.Body>
-                                    <Card.Title>{person.name}</Card.Title>
-                                </Card.Body>
+                                <Card.Header>{person.name}</Card.Header>
                                 <ListGroup>
                                     <ListGroup.Item>Gender {person.gender}</ListGroup.Item>
                                     <ListGroup.Item>Born {person.birth_year}</ListGroup.Item>

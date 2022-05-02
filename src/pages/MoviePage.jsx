@@ -14,8 +14,8 @@ const MoviePage = () => {
     const getFilm = async (id) => {
         setLoading(true)
         const data = await StarWarsAPI.getFilm(id)
-        setLoading(false)
         setFilm(data)
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -25,11 +25,11 @@ const MoviePage = () => {
     return (
         <>
 
-            {loading && !loading && (
+            {loading && (
                 <Loading />
             )} 
 
-            {film && ( 
+            {film && !loading && ( 
                 <Row>
                     <Col md={8} className='mx-auto'>
                         <Card>
@@ -44,6 +44,7 @@ const MoviePage = () => {
                             <ListGroup className="characterList">
                                 {film.characters.map((character, index) => 
                                     <ListGroup.Item
+                                        action
                                         as={Link}
                                         to={`/people/${getIdFromUrl(character)}`}
                                         key={index}

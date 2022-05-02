@@ -14,8 +14,8 @@ const PersonPage = () => {
     const getPerson = async (id) => {
         setLoading(true)
         const data = await StarWarsAPI.getPerson(id)
-        setLoading(false)
         setPerson(data)
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -46,6 +46,7 @@ const PersonPage = () => {
                             <ListGroup className="movieList">
                                 {person.films.map((film, index) => 
                                     <ListGroup.Item
+                                        action
                                         as={Link}
                                         to={`/films/${getIdFromUrl(film)}`}
                                         key={index}
