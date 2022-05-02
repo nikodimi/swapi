@@ -9,6 +9,7 @@ import PersonPage from './pages/PersonPage'
 import NotFoundPage from './pages/NotFoundPage'
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css'
+import './fonts/distant.ttf'
 
 function App() {
   return (
